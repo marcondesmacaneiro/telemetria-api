@@ -18,7 +18,7 @@ spring:
   datasource:
     platform: postgresql
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/aulas-api
+    url: jdbc:postgresql://localhost:5432/telemetria
     username: postgres
     password: postgres      
   cache:
