@@ -1,47 +1,39 @@
 package br.edu.unidavi.telemetria.domain.repository;
 
-import br.edu.unidavi.telemetria.domain.model.Pessoa;
+import br.edu.unidavi.telemetria.domain.model.Abrigo;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author marcondes
+ * @author marcondes 01/11/2016
  */
 @Service
 @Transactional(readOnly = true)
-public class PessoaService {
+public class AbrigoService {
 
     @Autowired
-    private PessoaRepository repository;
+    private AbrigoRepository repository;
 
-    public List<Pessoa> findAll() {
+    public List<Abrigo> findAll() {
         return repository.findAll();
     }
 
-    public Optional<Pessoa> findOne(Long id) {
+    public Optional<Abrigo> findOne(Long id) {
         return Optional.ofNullable(repository.findOne(id));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Pessoa save(Pessoa pessoa) {
-        return repository.save(pessoa);
+    public Abrigo save(Abrigo abrigo) {
+        return repository.save(abrigo);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(Pessoa pessoa) {
-        repository.delete(pessoa);
+    public void delete(Abrigo abrigo) {
+        repository.delete(abrigo);
     }
-
-    public Optional<Pessoa> findByEmail(String mail) {
-        System.out.println("E-mail: " + mail);
-        return Optional.ofNullable(repository.findByMail(mail));
-    }
-
 }

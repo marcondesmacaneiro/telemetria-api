@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 @SpringBootApplication
-public class AulaApplication implements ApplicationContextAware {
+public class TelemetriaApplication implements ApplicationContextAware {
 
 	private static ApplicationContext ctx;
 
@@ -20,7 +20,7 @@ public class AulaApplication implements ApplicationContextAware {
 	}
 
 	public static void main(String[] args) {
-		ctx = SpringApplication.run(AulaApplication.class, args);
+		ctx = SpringApplication.run(TelemetriaApplication.class, args);
 	}
 
 	@Override

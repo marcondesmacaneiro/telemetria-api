@@ -6,7 +6,7 @@ import org.springframework.core.convert.ConversionService;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import static br.edu.unidavi.telemetria.AulaApplication.getBean;
+import static br.edu.unidavi.telemetria.TelemetriaApplication.getBean;
 
 /**
  * Created by marcondesmacaneiro on 12/07/16.

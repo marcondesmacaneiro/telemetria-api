@@ -1,20 +1,16 @@
 package br.edu.unidavi.telemetria.view;
 
 import br.edu.unidavi.telemetria.domain.exception.EntityAreadyExistException;
-import br.edu.unidavi.telemetria.domain.model.Pessoa;
-import br.edu.unidavi.telemetria.domain.repository.PessoaService;
-import br.edu.unidavi.telemetria.domain.vo.Phone;
-import com.google.common.base.Preconditions;
+import br.edu.unidavi.telemetria.domain.model.Abrigo;
+import br.edu.unidavi.telemetria.domain.repository.AbrigoService;
 import java.util.List;
 import static java.util.Objects.nonNull;
-import java.util.Optional;
 import java.util.function.Consumer;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,99 +35,120 @@ import org.springframework.web.bind.annotation.RestController;
  * @author marcondes
  */
 @RestController
-@RequestMapping("/api/pessoa")
-public class PessoaRestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PessoaRestController.class);
-
+@RequestMapping("/api/abrigo")
+public class AbrigoRestController {
+    
+    private static final Logger logger = LoggerFactory.getLogger(AbrigoRestController.class);
+    
     @Autowired
-    private PessoaService service;
-
+    private AbrigoService service;
+    
     @Autowired
-    private PagedResourcesAssembler<Pessoa> pagedResourcesAssembler;
-
+    private PagedResourcesAssembler<Abrigo> pagedResourcesAssembler;
+    
     @RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<List<Pessoa>> findAll() {
+    public ResponseEntity<List<Abrigo>> findAll() {
         return ok(service.findAll());
     }
-
+    
     @RequestMapping(method = GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<Pessoa> findOne(@PathVariable Long id) {
-
-        Pessoa pessoa = service.findOne(id)
-                .orElseThrow(EntityAreadyExistException.entityAreadyExist("A Pessoa não existe!"));;
-
-        return ok(pessoa);
+    public ResponseEntity<Abrigo> findOne(@PathVariable Long id) {
+        
+        Abrigo abrigo = service.findOne(id)
+                .orElseThrow(EntityAreadyExistException.entityAreadyExist("O Abrigo não existe!"));;
+        
+        return ok(abrigo);
     }
-
+    
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     @CrossOrigin
-        public ResponseEntity<Void> gravar(@Valid @RequestBody Pessoa pessoa) {
+    public ResponseEntity<Void> gravar(@Valid @RequestBody Abrigo abrigo) {
 
 //        Pessoa existentPessoa = service.findByEmail(pessoa.getMail())
 //                .orElseThrow(EntityAreadyExistException.entityAreadyExist("Pessoa já existe!"));
-
-        pessoa = service.save(pessoa);
-
+        abrigo = service.save(abrigo);
+        
         return noContent().build();
     }
-
+    
     @RequestMapping(method = PATCH, value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Void> edit(@PathVariable Long id,
-            @Valid @RequestBody PessoaPatchInput input,
+            @Valid @RequestBody AbrigoPatchInput input,
             HttpServletRequest request) {
-
-        Pessoa pessoa = service.findOne(id)
-                .orElseThrow(EntityAreadyExistException.entityAreadyExist("Pessoa não existe!"));
-
-        input.accept(pessoa);
-
-        service.save(pessoa);
-
+        
+        Abrigo abrigo = service.findOne(id)
+                .orElseThrow(EntityAreadyExistException.entityAreadyExist("O abrigo não existe!"));
+        
+        input.accept(abrigo);
+        
+        service.save(abrigo);
+        
         return noContent().build();
     }
-
+    
     @RequestMapping(method = DELETE, value = "/{id}")
     @CrossOrigin
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
-        Pessoa pessoa = service.findOne(id)
-                .orElseThrow(EntityAreadyExistException.entityAreadyExist("Pessoa não existe!"));
-
-        service.delete(pessoa);
-
+        
+        Abrigo abrigo = service.findOne(id)
+                .orElseThrow(EntityAreadyExistException.entityAreadyExist("O abrigo não existe!"));
+        
+        service.delete(abrigo);
+        
         return noContent().build();
     }
-
+    
     static @Data
-    class PessoaPatchInput implements Consumer<Pessoa> {
-
+    class AbrigoPatchInput implements Consumer<Abrigo> {
+        
         @NotNull
         @Size(min = 1, max = 100)
-        private String name;
-
-        @Email(message = "Invalid mail address!")
-        @Size(min = 1, max = 100)
-        private String mail;
-
+        private String nome;
+        
         @NotNull
-        private Phone phone;
-
+        @Size(min = 1, max = 100)
+        private String responsavel;
+        
+        @NotNull
+        @Size(min = 10, max = 300)
+        private String imagem;
+        
+        @NotNull
+        @Size(min = 1, max = 100)
+        private Integer lotacaoMaxima;
+        
+        @NotNull
+        @Size(min = 1, max = 100)
+        private Integer lotacaoAtual;
+        
+        @NotNull
+        @Size(min = 1, max = 100)
+        private String localizacao;
+        
         @Override
-        public void accept(Pessoa pessoa) {
-            if (nonNull(name)) {
-                pessoa.setName(name);
+        public void accept(Abrigo abrigo) {
+            if (nonNull(nome)) {
+                abrigo.setNome(nome);
             }
-            if (nonNull(mail)) {
-                pessoa.setMail(mail);
+            if (nonNull(responsavel)) {
+                abrigo.setResponsavel(responsavel);
             }
-            if (nonNull(phone)) {
-                pessoa.setPhone(phone);
+            if (nonNull(imagem)) {
+                abrigo.setImagem(imagem);
+            }
+            if (nonNull(lotacaoMaxima)) {
+                abrigo.setLotacaoMaxima(lotacaoMaxima);
+            }
+            if (nonNull(lotacaoAtual)) {
+                abrigo.setLotacaoAtual(lotacaoAtual);
+            }
+            if (nonNull(localizacao)) {
+                abrigo.setLocalizacao(localizacao);
             }
         }
     }
-
+    
 }
