@@ -1,8 +1,9 @@
 package br.edu.unidavi.telemetria.view;
 
 import br.edu.unidavi.telemetria.domain.exception.EntityAreadyExistException;
-import br.edu.unidavi.telemetria.domain.model.Abrigo;
-import br.edu.unidavi.telemetria.domain.repository.AbrigoService;
+import br.edu.unidavi.telemetria.domain.model.AbrigoContato;
+import br.edu.unidavi.telemetria.domain.repository.AbrigoContatoService;
+import br.edu.unidavi.telemetria.domain.vo.Phone;
 import java.util.List;
 import static java.util.Objects.nonNull;
 import java.util.function.Consumer;
@@ -12,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.MediaType;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import org.springframework.http.ResponseEntity;
@@ -29,35 +29,24 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author marcondes
+ * @author Bruno Pasqualini
  */
 @RestController
-@RequestMapping("/api/abrigo")
-public class AbrigoRestController {
+@RequestMapping("api/abrigo/{id}/contato")
+public class AbrigoContatoRestController {
 
     @Autowired
-    private AbrigoService service;
-
-    @Autowired
-    private PagedResourcesAssembler<Abrigo> pagedResourcesAssembler;
+    private AbrigoContatoService service;
 
     @RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<List<Abrigo>> findAll() {
-        return ok(service.findAll());
-    }
-
-    @RequestMapping(method = GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public ResponseEntity<Abrigo> findOne(@PathVariable Long id) {
-        Abrigo abrigo = service.findOne(id)
-                .orElseThrow(EntityAreadyExistException.entityAreadyExist("O Abrigo não existe!"));
-        return ok(abrigo);
+    public ResponseEntity<List<AbrigoContato>> findByAbrigoId(@PathVariable Long id) {
+        return ok(service.findByAbrigoId(id));
     }
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<Void> gravar(@Valid @RequestBody Abrigo abrigo) {
+    public ResponseEntity<Void> gravar(@Valid @RequestBody AbrigoContato abrigo) {
         service.save(abrigo);
         return noContent().build();
     }
@@ -65,72 +54,50 @@ public class AbrigoRestController {
     @RequestMapping(method = PATCH, value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Void> edit(@PathVariable Long id,
-            @Valid @RequestBody AbrigoPatchInput input,
+            @Valid @RequestBody AbrigoContatoRestController.AbrigoContatoPatchInput input,
             HttpServletRequest request) {
 
-        Abrigo abrigo = service.findOne(id)
-                .orElseThrow(EntityAreadyExistException.entityAreadyExist("O abrigo não existe!"));
+        AbrigoContato contato = service.findOne(id)
+                .orElseThrow(EntityAreadyExistException.entityAreadyExist("O contato não existe!"));
 
-        input.accept(abrigo);
-        service.save(abrigo);
+        input.accept(contato);
+        service.save(contato);
         return noContent().build();
     }
 
     @RequestMapping(method = DELETE, value = "/{id}")
     @CrossOrigin
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        Abrigo abrigo = service.findOne(id)
-                               .orElseThrow(EntityAreadyExistException.entityAreadyExist("O abrigo não existe!"));
+        AbrigoContato abrigo = service.findOne(id)
+                               .orElseThrow(EntityAreadyExistException.entityAreadyExist("O contato não existe!"));
         service.delete(abrigo);
         return noContent().build();
     }
 
     static @Data
-    class AbrigoPatchInput implements Consumer<Abrigo> {
-
-        @NotNull
-        @Size(min = 1, max = 100)
-        private String nome;
+    class AbrigoContatoPatchInput implements Consumer<AbrigoContato> {
 
         @NotNull
         @Size(min = 1, max = 100)
         private String responsavel;
 
         @NotNull
-        @Size(min = 10, max = 300)
-        private String imagem;
+        private Phone telefone;
 
         @NotNull
-        private Integer lotacaoMaxima;
-
-        @NotNull
-        private Integer lotacaoAtual;
-
-        @NotNull
-        @Size(min = 1, max = 100)
-        private String localizacao;
+        private boolean principal;
 
         @Override
-        public void accept(Abrigo abrigo) {
-            if (nonNull(nome)) {
-                abrigo.setNome(nome);
-            }
+        public void accept(AbrigoContato abrigo) {
             if (nonNull(responsavel)) {
                 abrigo.setResponsavel(responsavel);
             }
-            if (nonNull(imagem)) {
-                abrigo.setImagem(imagem);
+            if (nonNull(telefone)) {
+                abrigo.setTelefone(telefone);
             }
-            if (nonNull(lotacaoMaxima)) {
-                abrigo.setLotacaoMaxima(lotacaoMaxima);
-            }
-            if (nonNull(lotacaoAtual)) {
-                abrigo.setLotacaoAtual(lotacaoAtual);
-            }
-            if (nonNull(localizacao)) {
-                abrigo.setLocalizacao(localizacao);
+            if (nonNull(principal)) {
+                abrigo.setPrincipal(principal);
             }
         }
     }
-
 }

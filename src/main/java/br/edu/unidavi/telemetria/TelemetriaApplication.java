@@ -9,22 +9,22 @@ import org.springframework.context.ApplicationContextAware;
 @SpringBootApplication
 public class TelemetriaApplication implements ApplicationContextAware {
 
-	private static ApplicationContext ctx;
+    private static ApplicationContext ctx;
 
-	public static <T> T getBean(Class<T> tClass) {
-		return ctx.getBean(tClass);
-	}
+    public static <T> T getBean(Class<T> tClass) {
+        return ctx.getBean(tClass);
+    }
 
-        public static <T> T getBean(String name, Class<T> tClass) {
-		return ctx.getBean(name, tClass);
-	}
+    public static <T> T getBean(String name, Class<T> tClass) {
+        return ctx.getBean(name, tClass);
+    }
 
-	public static void main(String[] args) {
-		ctx = SpringApplication.run(TelemetriaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        ctx = SpringApplication.run(TelemetriaApplication.class, args);
+    }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		ctx = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ctx = applicationContext;
+    }
 }

@@ -30,7 +30,6 @@ import org.springframework.hateoas.Identifiable;
 import org.springframework.hateoas.core.Relation;
 
 /**
- *
  * @author marcondes 01/11/2016
  */
 @Entity
@@ -57,13 +56,9 @@ public class AbrigoContato implements Serializable, Persistable<Long>, Identifia
     private String responsavel;
 
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(nullable = false, length = 100)
     private Phone telefone;
 
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(nullable = false, length = 100)
     private boolean principal;
 
     @ManyToOne(optional = false)
@@ -85,7 +80,6 @@ public class AbrigoContato implements Serializable, Persistable<Long>, Identifia
         this.abrigo = abrigo;
     }
 
-    @JsonIgnore
     @Override
     public Long getId() {
         return id;
