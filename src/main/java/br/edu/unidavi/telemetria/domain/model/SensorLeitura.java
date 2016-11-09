@@ -35,7 +35,7 @@ import org.springframework.hateoas.core.Relation;
 @Table(name = "tb_sensor_leitura")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Relation(value = "sensor", collectionRelation = "sensores")
+@Relation(value = "sensor_leitura", collectionRelation = "sensor_leituras")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")

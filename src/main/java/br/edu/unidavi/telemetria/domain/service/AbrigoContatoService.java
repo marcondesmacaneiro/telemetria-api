@@ -1,6 +1,7 @@
-package br.edu.unidavi.telemetria.domain.repository;
+package br.edu.unidavi.telemetria.domain.service;
 
 import br.edu.unidavi.telemetria.domain.model.AbrigoContato;
+import br.edu.unidavi.telemetria.domain.repository.AbrigoContatoRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

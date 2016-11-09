@@ -2,7 +2,7 @@ package br.edu.unidavi.telemetria.view;
 
 import br.edu.unidavi.telemetria.domain.exception.EntityAreadyExistException;
 import br.edu.unidavi.telemetria.domain.model.Abrigo;
-import br.edu.unidavi.telemetria.domain.repository.AbrigoService;
+import br.edu.unidavi.telemetria.domain.service.AbrigoService;
 import java.util.List;
 import static java.util.Objects.nonNull;
 import java.util.function.Consumer;

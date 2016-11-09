@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,7 +40,7 @@ import org.springframework.hateoas.core.Relation;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@ToString(of = {"id", "descricao"})
+@ToString(of = {"id", "numero"})
 public class ContatoGeralTelefone implements Serializable, Persistable<Long>, Identifiable<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -52,8 +51,7 @@ public class ContatoGeralTelefone implements Serializable, Persistable<Long>, Id
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, unique = true, length = Phone.MAX_LENGHT)
     private Phone numero;
 
     @ManyToOne(optional = false)

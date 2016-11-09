@@ -8,8 +8,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 /**
  * Created by marcondesmacaneiro on 10/10/16.
  */
-@RepositoryRestResource(collectionResourceRel = "sensoresleituras", itemResourceRel = "sensorleitura", path = "sensorleitura")
-interface SensorLeituraRepository extends JpaRepository<SensorLeitura, Long> {
+@RepositoryRestResource(collectionResourceRel = "sensorleituras", itemResourceRel = "sensorleitura", path = "sensorleitura")
+public interface SensorLeituraRepository extends JpaRepository<SensorLeitura, Long> {
 
     public List<SensorLeitura> findAllByOrderByIdAsc();
 

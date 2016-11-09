@@ -1,6 +1,8 @@
-package br.edu.unidavi.telemetria.domain.repository;
+package br.edu.unidavi.telemetria.domain.service;
 
 import br.edu.unidavi.telemetria.domain.model.Abrigo;
+import br.edu.unidavi.telemetria.domain.model.LeituraPonto;
+import br.edu.unidavi.telemetria.domain.repository.LeituraPontoRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,26 +15,26 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class AbrigoService {
+public class LeituraPontoService {
 
     @Autowired
-    private AbrigoRepository repository;
+    private LeituraPontoRepository repository;
 
-    public List<Abrigo> findAll() {
+    public List<LeituraPonto> findAll() {
         return repository.findAllByOrderByIdAsc();
     }
 
-    public Optional<Abrigo> findOne(Long id) {
+    public Optional<LeituraPonto> findOne(Long id) {
         return Optional.ofNullable(repository.findOne(id));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Abrigo save(Abrigo abrigo) {
-        return repository.save(abrigo);
+    public LeituraPonto save(LeituraPonto leituraPonto) {
+        return repository.save(leituraPonto);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(Abrigo abrigo) {
-        repository.delete(abrigo);
+    public void delete(LeituraPonto leituraPonto) {
+        repository.delete(leituraPonto);
     }
 }

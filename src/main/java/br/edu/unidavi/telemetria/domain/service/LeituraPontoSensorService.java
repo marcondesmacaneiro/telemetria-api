@@ -1,8 +1,8 @@
-package br.edu.unidavi.telemetria.domain.repository;
+package br.edu.unidavi.telemetria.domain.service;
 
 import br.edu.unidavi.telemetria.domain.model.Abrigo;
-import br.edu.unidavi.telemetria.domain.model.ContatoGeral;
-import br.edu.unidavi.telemetria.domain.model.ContatoGeralTelefone;
+import br.edu.unidavi.telemetria.domain.model.LeituraPontoSensor;
+import br.edu.unidavi.telemetria.domain.repository.LeituraPontoSensorRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,26 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class ContatoGeralTelefoneService {
+public class LeituraPontoSensorService {
 
     @Autowired
-    private ContatoGeralTelefoneRepository repository;
+    private LeituraPontoSensorRepository repository;
 
-    public List<ContatoGeralTelefone> findAll() {
+    public List<LeituraPontoSensor> findAll() {
         return repository.findAllByOrderByIdAsc();
     }
 
-    public Optional<ContatoGeralTelefone> findOne(Long id) {
+    public Optional<LeituraPontoSensor> findOne(Long id) {
         return Optional.ofNullable(repository.findOne(id));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public ContatoGeralTelefone save(ContatoGeralTelefone contatoGeralTelefone) {
-        return repository.save(contatoGeralTelefone);
+    public LeituraPontoSensor save(LeituraPontoSensor leituraPontoSensor) {
+        return repository.save(leituraPontoSensor);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(ContatoGeralTelefone contatoGeralTelefone) {
-        repository.delete(contatoGeralTelefone);
+    public void delete(LeituraPontoSensor leituraPontoSensor) {
+        repository.delete(leituraPontoSensor);
     }
 }
