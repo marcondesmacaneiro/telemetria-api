@@ -28,7 +28,6 @@ import org.springframework.hateoas.Identifiable;
 import org.springframework.hateoas.core.Relation;
 
 /**
- *
  * @author marcondes 01/11/2016
  */
 @Entity
@@ -65,12 +64,10 @@ public class Abrigo implements Serializable, Persistable<Long>, Identifiable<Lon
     private String imagem;
 
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
     private Integer lotacaoMaxima;
 
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
     private Integer lotacaoAtual;
 
@@ -96,7 +93,6 @@ public class Abrigo implements Serializable, Persistable<Long>, Identifiable<Lon
         this.lotacaoAtual = lotacaoAtual;
     }
 
-    @JsonIgnore
     @Override
     public Long getId() {
         return id;
