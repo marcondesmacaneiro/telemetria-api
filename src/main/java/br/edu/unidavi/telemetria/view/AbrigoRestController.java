@@ -11,8 +11,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.MediaType;
@@ -31,7 +29,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author marcondes
  */
 @RestController
@@ -117,11 +114,9 @@ public class AbrigoRestController {
         private String imagem;
 
         @NotNull
-        @Size(min = 1, max = 100)
         private Integer lotacaoMaxima;
 
         @NotNull
-        @Size(min = 1, max = 100)
         private Integer lotacaoAtual;
 
         @NotNull
