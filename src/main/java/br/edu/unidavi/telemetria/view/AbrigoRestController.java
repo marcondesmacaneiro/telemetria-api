@@ -37,31 +37,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/abrigo")
 public class AbrigoRestController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(AbrigoRestController.class);
-    
+
     @Autowired
     private AbrigoService service;
-    
+
     @Autowired
     private PagedResourcesAssembler<Abrigo> pagedResourcesAssembler;
-    
+
     @RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<List<Abrigo>> findAll() {
         return ok(service.findAll());
     }
-    
+
     @RequestMapping(method = GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Abrigo> findOne(@PathVariable Long id) {
-        
+
         Abrigo abrigo = service.findOne(id)
                 .orElseThrow(EntityAreadyExistException.entityAreadyExist("O Abrigo não existe!"));;
-        
+
         return ok(abrigo);
     }
-    
+
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Void> gravar(@Valid @RequestBody Abrigo abrigo) {
@@ -69,65 +69,65 @@ public class AbrigoRestController {
 //        Pessoa existentPessoa = service.findByEmail(pessoa.getMail())
 //                .orElseThrow(EntityAreadyExistException.entityAreadyExist("Pessoa já existe!"));
         abrigo = service.save(abrigo);
-        
+
         return noContent().build();
     }
-    
+
     @RequestMapping(method = PATCH, value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Void> edit(@PathVariable Long id,
             @Valid @RequestBody AbrigoPatchInput input,
             HttpServletRequest request) {
-        
+
         Abrigo abrigo = service.findOne(id)
                 .orElseThrow(EntityAreadyExistException.entityAreadyExist("O abrigo não existe!"));
-        
+
         input.accept(abrigo);
-        
+
         service.save(abrigo);
-        
+
         return noContent().build();
     }
-    
+
     @RequestMapping(method = DELETE, value = "/{id}")
     @CrossOrigin
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        
+
         Abrigo abrigo = service.findOne(id)
                 .orElseThrow(EntityAreadyExistException.entityAreadyExist("O abrigo não existe!"));
-        
+
         service.delete(abrigo);
-        
+
         return noContent().build();
     }
-    
+
     static @Data
     class AbrigoPatchInput implements Consumer<Abrigo> {
-        
+
         @NotNull
         @Size(min = 1, max = 100)
         private String nome;
-        
+
         @NotNull
         @Size(min = 1, max = 100)
         private String responsavel;
-        
+
         @NotNull
         @Size(min = 10, max = 300)
         private String imagem;
-        
+
         @NotNull
         @Size(min = 1, max = 100)
         private Integer lotacaoMaxima;
-        
+
         @NotNull
         @Size(min = 1, max = 100)
         private Integer lotacaoAtual;
-        
+
         @NotNull
         @Size(min = 1, max = 100)
         private String localizacao;
-        
+
         @Override
         public void accept(Abrigo abrigo) {
             if (nonNull(nome)) {
@@ -150,5 +150,5 @@ public class AbrigoRestController {
             }
         }
     }
-    
+
 }
