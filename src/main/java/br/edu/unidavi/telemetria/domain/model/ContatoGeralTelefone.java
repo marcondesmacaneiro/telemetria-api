@@ -8,9 +8,11 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -41,7 +43,7 @@ import org.springframework.hateoas.core.Relation;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@ToString(of = {"id", "descricao"})
+@ToString(of = {"id", "numero"})
 public class ContatoGeralTelefone implements Serializable, Persistable<Long>, Identifiable<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -56,7 +58,8 @@ public class ContatoGeralTelefone implements Serializable, Persistable<Long>, Id
     @Column(nullable = false, length = 200)
     private Phone numero;
 
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ContatoGeral contatoGeral;
 
     @JsonIgnore
