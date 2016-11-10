@@ -1,6 +1,5 @@
 package br.edu.unidavi.telemetria.domain.service;
 
-import br.edu.unidavi.telemetria.domain.model.Abrigo;
 import br.edu.unidavi.telemetria.domain.model.Doacao;
 import br.edu.unidavi.telemetria.domain.repository.DoacaoRepository;
 import java.util.List;

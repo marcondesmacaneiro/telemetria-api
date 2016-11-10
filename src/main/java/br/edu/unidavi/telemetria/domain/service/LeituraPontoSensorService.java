@@ -1,6 +1,5 @@
 package br.edu.unidavi.telemetria.domain.service;
 
-import br.edu.unidavi.telemetria.domain.model.Abrigo;
 import br.edu.unidavi.telemetria.domain.model.LeituraPontoSensor;
 import br.edu.unidavi.telemetria.domain.repository.LeituraPontoSensorRepository;
 import java.util.List;

@@ -1,6 +1,5 @@
 package br.edu.unidavi.telemetria.domain.service;
 
-import br.edu.unidavi.telemetria.domain.model.Abrigo;
 import br.edu.unidavi.telemetria.domain.model.SensorLeitura;
 import br.edu.unidavi.telemetria.domain.repository.SensorLeituraRepository;
 import java.util.List;
