@@ -1,7 +1,8 @@
-package br.edu.unidavi.telemetria.domain.repository;
+package br.edu.unidavi.telemetria.domain.service;
 
 import br.edu.unidavi.telemetria.domain.model.Abrigo;
-import br.edu.unidavi.telemetria.domain.model.ContatoGeral;
+import br.edu.unidavi.telemetria.domain.model.Doacao;
+import br.edu.unidavi.telemetria.domain.repository.DoacaoRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +15,26 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class ContatoGeralService {
+public class DoacaoService {
 
     @Autowired
-    private ContatoGeralRepository repository;
+    private DoacaoRepository repository;
 
-    public List<ContatoGeral> findAll() {
+    public List<Doacao> findAll() {
         return repository.findAllByOrderByIdAsc();
     }
 
-    public Optional<ContatoGeral> findOne(Long id) {
+    public Optional<Doacao> findOne(Long id) {
         return Optional.ofNullable(repository.findOne(id));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public ContatoGeral save(ContatoGeral contatoGeral) {
-        return repository.save(contatoGeral);
+    public Doacao save(Doacao docao) {
+        return repository.save(docao);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(ContatoGeral contatoGeral) {
-        repository.delete(contatoGeral);
+    public void delete(Doacao docao) {
+        repository.delete(docao);
     }
 }

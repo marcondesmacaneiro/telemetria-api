@@ -58,6 +58,9 @@ public class ContatoGeral implements Serializable, Persistable<Long>, Identifiab
     private String descricao;
 
     @NotNull
+    @Size(min = 1, max = 300)
+    @Column(nullable = false, length = 300)
+    private String imagem;
     @Size(min = 1, max = 20)
     @Column(nullable = false, length = 20)
     private String banner;
@@ -74,9 +77,9 @@ public class ContatoGeral implements Serializable, Persistable<Long>, Identifiab
     @LastModifiedDate
     private LocalDateTime updatedTime;
 
-    private ContatoGeral(String descricao, String banner) {
+    private ContatoGeral(String descricao, String imagem) {
         this.descricao = descricao;
-        this.banner = banner;
+        this.imagem    = imagem;
     }
 
     @Override
@@ -90,8 +93,8 @@ public class ContatoGeral implements Serializable, Persistable<Long>, Identifiab
         return Objects.isNull(id);
     }
 
-    public static ContatoGeral of(String descricao, String banner) {
-        return new ContatoGeral(descricao, banner);
+    public static ContatoGeral of(String descricao, String imagem) {
+        return new ContatoGeral(descricao, imagem);
     }
 
 }

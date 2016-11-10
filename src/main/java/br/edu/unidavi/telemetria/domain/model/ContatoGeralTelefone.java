@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -54,8 +53,7 @@ public class ContatoGeralTelefone implements Serializable, Persistable<Long>, Id
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, unique = true, length = Phone.MAX_LENGHT)
     private Phone numero;
 
     @JsonIgnore

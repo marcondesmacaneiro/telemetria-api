@@ -36,11 +36,11 @@ import org.springframework.hateoas.core.Relation;
 @Table(name = "tb_abrigo_contato")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Relation(value = "abrigocontato", collectionRelation = "abrigocontatos")
+@Relation(value = "abrigo_contato", collectionRelation = "abrigo_contatos")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@ToString(of = {"id", "nome"})
+@ToString(of = {"id", "responsavel"})
 public class AbrigoContato implements Serializable, Persistable<Long>, Identifiable<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +56,7 @@ public class AbrigoContato implements Serializable, Persistable<Long>, Identifia
     private String responsavel;
 
     @NotNull
+    @Column(nullable = false, unique = false, length = Phone.MAX_LENGHT)
     private Phone telefone;
 
     @NotNull

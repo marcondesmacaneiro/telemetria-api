@@ -36,11 +36,11 @@ import org.springframework.hateoas.core.Relation;
 @Table(name = "tb_leitura_ponto_sensor")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Relation(value = "usuario", collectionRelation = "usuarios")
+@Relation(value = "leitura_ponto_sensor", collectionRelation = "leitura_ponto_sensores")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@ToString(of = {"id", "nome"})
+@ToString(of = {"id"})
 public class LeituraPontoSensor implements Serializable, Persistable<Long>, Identifiable<Long> {
 
     private static final long serialVersionUID = 1L;

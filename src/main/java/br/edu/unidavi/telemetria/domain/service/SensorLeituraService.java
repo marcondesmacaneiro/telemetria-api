@@ -1,7 +1,8 @@
-package br.edu.unidavi.telemetria.domain.repository;
+package br.edu.unidavi.telemetria.domain.service;
 
 import br.edu.unidavi.telemetria.domain.model.Abrigo;
-import br.edu.unidavi.telemetria.domain.model.LeituraPonto;
+import br.edu.unidavi.telemetria.domain.model.SensorLeitura;
+import br.edu.unidavi.telemetria.domain.repository.SensorLeituraRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +15,26 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class LeituraPontoService {
+public class SensorLeituraService {
 
     @Autowired
-    private LeituraPontoRepository repository;
+    private SensorLeituraRepository repository;
 
-    public List<LeituraPonto> findAll() {
+    public List<SensorLeitura> findAll() {
         return repository.findAllByOrderByIdAsc();
     }
 
-    public Optional<LeituraPonto> findOne(Long id) {
+    public Optional<SensorLeitura> findOne(Long id) {
         return Optional.ofNullable(repository.findOne(id));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public LeituraPonto save(LeituraPonto leituraPonto) {
-        return repository.save(leituraPonto);
+    public SensorLeitura save(SensorLeitura sensorLeitura) {
+        return repository.save(sensorLeitura);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(LeituraPonto leituraPonto) {
-        repository.delete(leituraPonto);
+    public void delete(SensorLeitura sensorLeitura) {
+        repository.delete(sensorLeitura);
     }
 }
