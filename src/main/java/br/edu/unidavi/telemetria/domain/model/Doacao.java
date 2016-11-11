@@ -20,6 +20,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Check;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
@@ -33,6 +35,7 @@ import org.springframework.hateoas.core.Relation;
  */
 @Entity
 @Table(name = "tb_doacao")
+@Check(constraints = "tipo = ANY(array["+Doacao.TIPO_ENTIDADE+", "+Doacao.TIPO_INDIVIDUAL+"])")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Relation(value = "doacao", collectionRelation = "doacoes")
@@ -41,6 +44,9 @@ import org.springframework.hateoas.core.Relation;
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "nome"})
 public class Doacao implements Serializable, Persistable<Long>, Identifiable<Long> {
+    
+    public static final int TIPO_ENTIDADE   = 1;
+    public static final int TIPO_INDIVIDUAL = 2;
 
     private static final long serialVersionUID = 1L;
 
@@ -57,11 +63,20 @@ public class Doacao implements Serializable, Persistable<Long>, Identifiable<Lon
     @Size(min = 1, max = 200)
     @Column(nullable = false, length = 200)
     private String nome;
-
+    
     @NotNull
-    @Size(min = 1, max = 400)
-    @Column(nullable = false, length = 400)
-    private String contato;
+    @Size(min = 1, max = 250)
+    @Column(nullable = false, length = 250)
+    private String endereco;
+    
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(nullable = false, length = 100)
+    private String localizacao;
+    
+    @NotNull
+    @Type(type = "text")
+    private String informacoes;
 
     @JsonIgnore
     @CreatedDate
@@ -72,11 +87,13 @@ public class Doacao implements Serializable, Persistable<Long>, Identifiable<Lon
     @LastModifiedDate
     private LocalDateTime updatedTime;
 
-    private Doacao(Integer tipo, String nome, String contato) {
+    private Doacao(Integer tipo, String nome, String endereco, String localizacao, String informacoes) {
         this.tipo = tipo;
         this.nome = nome;
-        this.contato = contato;
-    }
+        this.endereco = endereco;
+        this.localizacao = localizacao;
+        this.informacoes = informacoes;
+    }    
 
     @Override
     public Long getId() {
@@ -89,8 +106,8 @@ public class Doacao implements Serializable, Persistable<Long>, Identifiable<Lon
         return Objects.isNull(id);
     }
 
-    public static Doacao of(Integer tipo, String nome, String contato) {
-        return new Doacao(tipo, nome, contato);
+    public static Doacao of(Integer tipo, String nome, String endereco, String localizacao, String informacoes) {
+        return new Doacao(tipo, nome, endereco, localizacao, informacoes);
     }
 
 }

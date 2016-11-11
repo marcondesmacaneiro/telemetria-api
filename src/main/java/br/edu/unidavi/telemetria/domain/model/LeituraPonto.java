@@ -55,8 +55,8 @@ public class LeituraPonto implements Serializable, Persistable<Long>, Identifiab
     private String nome;
     
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(nullable = false, length = 200)
+    @Size(min = 1, max = 100)
+    @Column(nullable = false, length = 100)
     private String localizacao;    
 
     @JsonIgnore
