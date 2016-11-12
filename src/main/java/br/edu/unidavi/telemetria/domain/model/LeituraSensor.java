@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.Identifiable;
@@ -36,7 +35,7 @@ import org.springframework.hateoas.core.Relation;
 @Table(name = "tb_leitura_sensor")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Relation(value = "leitura_sensor", collectionRelation = "leitura_sensores")
+@Relation(value = "leitura_sensor", collectionRelation = "leituras_sensores")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
@@ -67,13 +66,9 @@ public class LeituraSensor implements Serializable, Persistable<Long>, Identifia
     @Column(nullable = false)
     private LocalDateTime createdTime;
 
-    @JsonIgnore
-    @LastModifiedDate
-    private LocalDateTime updatedTime;
-
-    private LeituraSensor(String nome, String leitura) {
-        this.nome = nome;
-        this.leitura = this.leitura;
+    private LeituraSensor(String nome, float leitura) {
+        this.nome    = nome;
+        this.leitura = leitura;
     }
 
     @Override
@@ -87,7 +82,7 @@ public class LeituraSensor implements Serializable, Persistable<Long>, Identifia
         return Objects.isNull(id);
     }
 
-    public static LeituraSensor of(String nome, String leitura) {
+    public static LeituraSensor of(String nome, float leitura) {
         return new LeituraSensor(nome, leitura);
     }
 

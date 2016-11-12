@@ -1,6 +1,7 @@
 package br.edu.unidavi.telemetria.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -14,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -51,14 +51,12 @@ public class LeituraPontoSensor implements Serializable, Persistable<Long>, Iden
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false)
     private boolean ativo;
 
     @NotNull
-    @Size(min = 1, max = 20)
-    @Column(nullable = false, length = 20)
-    private String manual;
+    @Column(nullable = false)
+    private boolean manual;
 
     @ManyToOne(optional = false)
     private LeituraPonto leituraPonto;
@@ -75,14 +73,19 @@ public class LeituraPontoSensor implements Serializable, Persistable<Long>, Iden
     @LastModifiedDate
     private LocalDateTime updatedTime;
 
-    private LeituraPontoSensor(boolean ativo, String manual) {
-        this.ativo = ativo;
+    private LeituraPontoSensor(boolean ativo, boolean manual) {
+        this.ativo  = ativo;
         this.manual = manual;
     }
 
     @Override
     public Long getId() {
         return id;
+    }
+    
+    @JsonProperty("nomeSensor")
+    public String getNomeSensor(){
+        return this.sensorLeitura.getNome();
     }
 
     @JsonIgnore
@@ -91,7 +94,7 @@ public class LeituraPontoSensor implements Serializable, Persistable<Long>, Iden
         return Objects.isNull(id);
     }
 
-    public static LeituraPontoSensor of(boolean ativo, String manual) {
+    public static LeituraPontoSensor of(boolean ativo, boolean manual) {
         return new LeituraPontoSensor(ativo, manual);
     }
 

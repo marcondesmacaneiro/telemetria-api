@@ -3,6 +3,7 @@ package br.edu.unidavi.telemetria.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,6 +22,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
@@ -53,11 +57,20 @@ public class LeituraPonto implements Serializable, Persistable<Long>, Identifiab
     @Size(min = 1, max = 200)
     @Column(nullable = false, length = 200)
     private String nome;
-    
+
+    @NotNull
+    @Size(min = 1, max = 250)
+    @Column(nullable = false, length = 250)
+    private String endereco;
+
     @NotNull
     @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
-    private String localizacao;    
+    private String localizacao;
+
+    @OneToMany(mappedBy = "leituraPonto")
+    @Cascade(CascadeType.DELETE)
+    private List<LeituraPontoSensor> sensores;
 
     @JsonIgnore
     @CreatedDate
