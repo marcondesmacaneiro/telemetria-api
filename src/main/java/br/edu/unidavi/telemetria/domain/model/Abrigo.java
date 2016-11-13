@@ -58,6 +58,11 @@ public class Abrigo implements Serializable, Persistable<Long>, Identifiable<Lon
     @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
     private String responsavel;
+    
+    @NotNull
+    @Size(min = 1, max = 250)
+    @Column(nullable = false, length = 250)
+    private String endereco;
 
     @NotNull
     @Size(min = 10, max = 300)
@@ -65,11 +70,11 @@ public class Abrigo implements Serializable, Persistable<Long>, Identifiable<Lon
     private String imagem;
 
     @NotNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private Integer lotacaoMaxima;
 
     @NotNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private Integer lotacaoAtual;
 
     @NotNull

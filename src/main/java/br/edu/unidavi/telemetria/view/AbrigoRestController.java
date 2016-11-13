@@ -64,11 +64,7 @@ public class AbrigoRestController {
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Void> gravar(@Valid @RequestBody Abrigo abrigo) {
-
-//        Pessoa existentPessoa = service.findByEmail(pessoa.getMail())
-//                .orElseThrow(EntityAreadyExistException.entityAreadyExist("Pessoa já existe!"));
         abrigo = service.save(abrigo);
-
         return noContent().build();
     }
 
@@ -110,6 +106,10 @@ public class AbrigoRestController {
         @NotNull
         @Size(min = 1, max = 100)
         private String responsavel;
+        
+        @NotNull
+        @Size(min = 1, max = 250)
+        private String endereco;
 
         @NotNull
         @Size(min = 10, max = 300)
@@ -132,6 +132,9 @@ public class AbrigoRestController {
             }
             if (nonNull(responsavel)) {
                 abrigo.setResponsavel(responsavel);
+            }
+            if (nonNull(endereco)) {
+                abrigo.setEndereco(endereco);
             }
             if (nonNull(imagem)) {
                 abrigo.setImagem(imagem);
