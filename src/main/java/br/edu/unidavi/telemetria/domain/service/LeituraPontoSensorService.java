@@ -22,6 +22,10 @@ public class LeituraPontoSensorService {
     public List<LeituraPontoSensor> findAll() {
         return repository.findAllByOrderByIdAsc();
     }
+    
+    public List<LeituraPontoSensor> findAllSensoresAtivos(Long id) {
+        return repository.findAllByLeituraPontoIdAndAtivoTrue(id);
+    }
 
     public Optional<LeituraPontoSensor> findOne(Long id) {
         return Optional.ofNullable(repository.findOne(id));

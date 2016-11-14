@@ -12,5 +12,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface LeituraPontoSensorRepository extends JpaRepository<LeituraPontoSensor, Long> {
 
     public List<LeituraPontoSensor> findAllByOrderByIdAsc();
+    
+    public List<LeituraPontoSensor> findAllByLeituraPontoIdAndAtivoTrue(Long id);
 
 }

@@ -58,9 +58,11 @@ public class LeituraPontoSensor implements Serializable, Persistable<Long>, Iden
     @Column(nullable = false)
     private boolean manual;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     private LeituraPonto leituraPonto;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     private SensorLeitura sensorLeitura;
 
