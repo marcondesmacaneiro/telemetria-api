@@ -1,4 +1,24 @@
-INSERT INTO public.tb_sensor_leitura VALUES (1, 'Nível do Rio');
-INSERT INTO public.tb_sensor_leitura VALUES (2, 'Umidade');
-INSERT INTO public.tb_sensor_leitura VALUES (3, 'Vento');
-INSERT INTO public.tb_sensor_leitura VALUES (4, 'Temperatura');
+INSERT INTO public.tb_sensor_leitura (id,nome) 
+SELECT 1, 'Nível do Rio'
+WHERE
+    NOT EXISTS (
+        SELECT id FROM public.tb_sensor_leitura WHERE id = 1
+    );
+INSERT INTO public.tb_sensor_leitura (id,nome) 
+SELECT 2, 'Umidade'
+WHERE
+    NOT EXISTS (
+        SELECT id FROM public.tb_sensor_leitura WHERE id = 2
+    );
+INSERT INTO public.tb_sensor_leitura (id,nome) 
+SELECT 3, 'Vento'
+WHERE
+    NOT EXISTS (
+        SELECT id FROM public.tb_sensor_leitura WHERE id = 3
+    );
+INSERT INTO public.tb_sensor_leitura (id,nome) 
+SELECT 4, 'Temperatura'
+WHERE
+    NOT EXISTS (
+        SELECT id FROM public.tb_sensor_leitura WHERE id = 4
+    );

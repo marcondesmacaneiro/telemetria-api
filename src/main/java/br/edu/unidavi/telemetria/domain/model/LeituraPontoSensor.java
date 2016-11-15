@@ -56,7 +56,7 @@ public class LeituraPontoSensor implements Serializable, Persistable<Long>, Iden
 
     @NotNull
     @Column(nullable = false)
-    private boolean manual;
+    private Boolean manual;
 
     @JsonIgnore
     @ManyToOne(optional = false)
@@ -75,7 +75,7 @@ public class LeituraPontoSensor implements Serializable, Persistable<Long>, Iden
     @LastModifiedDate
     private LocalDateTime updatedTime;
 
-    private LeituraPontoSensor(boolean ativo, boolean manual) {
+    private LeituraPontoSensor(boolean ativo, Boolean manual) {
         this.ativo  = ativo;
         this.manual = manual;
     }
@@ -96,7 +96,7 @@ public class LeituraPontoSensor implements Serializable, Persistable<Long>, Iden
         return Objects.isNull(id);
     }
 
-    public static LeituraPontoSensor of(boolean ativo, boolean manual) {
+    public static LeituraPontoSensor of(boolean ativo, Boolean manual) {
         return new LeituraPontoSensor(ativo, manual);
     }
 

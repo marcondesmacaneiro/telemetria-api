@@ -1,6 +1,19 @@
 spring:
+  datasource:
+    initialize: true
+    data: classpath*:data-from-migration.sql,classpath*:data.sql,classpath*:data-gen.sql,classpath*:data-personas.sql
+  jpa: 
+    properties: 
+      hibernate: 
+        hbm2ddl: 
+          auto: update
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
+flyway:
+  locations: classpath:migration
+  schemas: public
+  validate-on-migrate: false
+  baseline-on-migrate: true
 ---
 spring:
   resources:
