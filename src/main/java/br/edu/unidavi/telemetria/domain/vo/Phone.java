@@ -18,14 +18,11 @@ public class Phone implements Serializable, Comparable<Phone> {
 
     public static final int MAX_LENGHT = 20;
 
-    private final String countryCode;
-
     private final String areaCode;
 
     private final String number;
 
-    private Phone(String countryCode, String areaCode, String number) {
-        this.countryCode = countryCode;
+    private Phone(String areaCode, String number) {
         this.areaCode = areaCode;
         this.number = number;
     }
@@ -33,11 +30,10 @@ public class Phone implements Serializable, Comparable<Phone> {
     public static Phone of(String value) {
         checkNotNull(value, "Phone is required!");
         String digits = value.replaceAll("\\D", "");
-        checkArgument(digits.matches("\\d{12,13}"), "Phone is invalid!");
-        String country = digits.substring(0, 2);
-        String areaCode = digits.substring(2, 4);
-        String number = digits.substring(4);
-        return new Phone(country, areaCode, number);
+        checkArgument(digits.matches("\\d{10,11}"), "Phone is invalid!");
+        String areaCode = digits.substring(0, 2);
+        String number = digits.substring(2);
+        return new Phone(areaCode, number);
     }
 
     @Override
@@ -48,8 +44,7 @@ public class Phone implements Serializable, Comparable<Phone> {
             return true;
         } else if (obj instanceof Phone) {
             Phone other = (Phone) obj;
-            return Objects.equal(countryCode, other.countryCode)
-                    && Objects.equal(areaCode, other.areaCode)
+            return Objects.equal(areaCode, other.areaCode)
                     && Objects.equal(number, other.number);
         }
         return false;
@@ -57,11 +52,7 @@ public class Phone implements Serializable, Comparable<Phone> {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(countryCode, areaCode, number);
-    }
-
-    public String getCountryCode() {
-        return countryCode;
+        return Objects.hashCode(areaCode, number);
     }
 
     public String getAreaCode() {
@@ -75,14 +66,12 @@ public class Phone implements Serializable, Comparable<Phone> {
     @Override
     public String toString() {
         if (number.length() == 8) {
-            return String.format("+%s %s %s-%s",
-                    countryCode,
+            return String.format("%s %s-%s",
                     areaCode,
                     number.substring(0, 4),
                     number.substring(4));
         } else {
-            return String.format("+%s %s %s-%s",
-                    countryCode,
+            return String.format("%s %s-%s",
                     areaCode,
                     number.substring(0, 5),
                     number.substring(5));
@@ -92,7 +81,6 @@ public class Phone implements Serializable, Comparable<Phone> {
     @Override
     public int compareTo(Phone o) {
         return ComparisonChain.start()
-                .compare(countryCode, o.countryCode)
                 .compare(areaCode, o.areaCode)
                 .compare(number, o.number)
                 .result();

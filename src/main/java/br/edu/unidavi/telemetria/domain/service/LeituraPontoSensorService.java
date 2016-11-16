@@ -1,7 +1,9 @@
 package br.edu.unidavi.telemetria.domain.service;
 
 import br.edu.unidavi.telemetria.domain.model.LeituraPontoSensor;
+import br.edu.unidavi.telemetria.domain.model.LeituraSensor;
 import br.edu.unidavi.telemetria.domain.repository.LeituraPontoSensorRepository;
+import br.edu.unidavi.telemetria.domain.repository.LeituraSensorRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,24 @@ public class LeituraPontoSensorService {
 
     @Autowired
     private LeituraPontoSensorRepository repository;
+    
+    @Autowired
+    private LeituraSensorRepository repoLeituraSensor;
 
     public List<LeituraPontoSensor> findAll() {
-        return repository.findAllByOrderByIdAsc();
+        List<LeituraPontoSensor> sensores = repository.findAllByOrderByIdAsc();
+        for (LeituraPontoSensor sensor : sensores) {
+            encontraUltimaLeituraSensor(sensor);
+        }
+        return sensores;
     }
     
     public List<LeituraPontoSensor> findAllSensoresAtivos(Long id) {
-        return repository.findAllByLeituraPontoIdAndAtivoTrue(id);
+        List<LeituraPontoSensor> sensores = repository.findAllByLeituraPontoIdAndAtivoTrueOrderByIdAsc(id);
+        for (LeituraPontoSensor sensor : sensores) {
+            encontraUltimaLeituraSensor(sensor);
+        }
+        return sensores;
     }
 
     public Optional<LeituraPontoSensor> findOne(Long id) {
@@ -39,5 +52,12 @@ public class LeituraPontoSensorService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(LeituraPontoSensor leituraPontoSensor) {
         repository.delete(leituraPontoSensor);
+    }
+    
+    private void encontraUltimaLeituraSensor(LeituraPontoSensor sensor){
+        LeituraSensor leitura = repoLeituraSensor.findFirstByLeituraPontoSensorIdOrderByDataHoraDesc(sensor.getId());
+        if(leitura != null){
+            sensor.setUltimaLeitura(leitura.getLeituraFormatada() + " - " + leitura.getDataHoraFormatada());
+        }
     }
 }

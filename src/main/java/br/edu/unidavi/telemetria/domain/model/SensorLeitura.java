@@ -38,6 +38,11 @@ import org.springframework.hateoas.core.Relation;
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "nome"})
 public class SensorLeitura implements Serializable, Persistable<Long>, Identifiable<Long> {
+    
+    public static final int SENSOR_NIVEL_RIO   = 1;
+    public static final int SENSOR_UMIDADE     = 2;
+    public static final int SENSOR_VENTO       = 3;
+    public static final int SENSOR_TEMPERATURA = 4;
 
     private static final long serialVersionUID = 1L;
 

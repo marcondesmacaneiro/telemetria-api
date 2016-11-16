@@ -1,8 +1,11 @@
 package br.edu.unidavi.telemetria.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,14 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.Identifiable;
@@ -50,30 +51,48 @@ public class LeituraSensor implements Serializable, Persistable<Long>, Identifia
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(nullable = false, length = 200)
-    private String nome;
-
-    @NotNull
-    @Column(nullable = false)
-    private float leitura;
+    @Column(nullable = false, precision = 19, scale = 4)
+    private BigDecimal leitura;
 
     @ManyToOne(optional = false)
     private LeituraPontoSensor leituraPontoSensor;
 
-    @JsonIgnore
-    @CreatedDate
     @Column(nullable = false)
-    private LocalDateTime createdTime;
+    private LocalDateTime dataHora;
 
-    private LeituraSensor(String nome, float leitura) {
-        this.nome    = nome;
-        this.leitura = leitura;
+    private LeituraSensor(BigDecimal leitura, LocalDateTime data) {
+        this.leitura  = leitura;
+        this.dataHora = data;
     }
 
     @Override
     public Long getId() {
         return id;
+    }
+    
+    public String getDataHoraFormatada(){
+        return dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
+    
+    @JsonProperty("leituraFormatada")
+    public String getLeituraFormatada(){
+        String valor = String.valueOf(leitura);
+        valor = !valor.contains(".") ? valor : valor.replaceAll("0*$", "").replaceAll("\\.$", "");
+        return valor + " " + getComplementoLeitura();
+    }
+    
+    private String getComplementoLeitura(){
+        switch(leituraPontoSensor.getSensorLeitura().getId().intValue()){
+            case SensorLeitura.SENSOR_NIVEL_RIO:
+                return "m";
+            case SensorLeitura.SENSOR_UMIDADE:
+                return "%";
+            case SensorLeitura.SENSOR_VENTO:
+                return "km/h";
+            case SensorLeitura.SENSOR_TEMPERATURA:
+                return "ºC";
+        }
+        return "";
     }
 
     @JsonIgnore
@@ -82,8 +101,8 @@ public class LeituraSensor implements Serializable, Persistable<Long>, Identifia
         return Objects.isNull(id);
     }
 
-    public static LeituraSensor of(String nome, float leitura) {
-        return new LeituraSensor(nome, leitura);
+    public static LeituraSensor of(BigDecimal leitura, LocalDateTime data) {
+        return new LeituraSensor(leitura, data);
     }
 
 }

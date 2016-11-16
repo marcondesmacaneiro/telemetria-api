@@ -50,7 +50,6 @@ public class AbrigoService {
 
     private void encontraContatoPrincipal(Abrigo abrigo) {
         if (abrigo != null) {
-            System.out.println(abrigo.getId());
             AbrigoContato contato = repositoryContato.findFirstByAbrigoIdAndPrincipalTrue(abrigo.getId());
             if(contato != null){
                 abrigo.setContatoPrincipal(contato.getTelefone().toString());

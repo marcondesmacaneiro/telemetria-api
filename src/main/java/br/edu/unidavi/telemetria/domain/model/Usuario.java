@@ -63,6 +63,10 @@ public class Usuario implements Serializable, Persistable<Long>, Identifiable<Lo
     @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
     private String senha;
+    
+    @NotNull
+    @Column(nullable = false)
+    private boolean ativo;
 
     @JsonIgnore
     @CreatedDate
@@ -73,10 +77,11 @@ public class Usuario implements Serializable, Persistable<Long>, Identifiable<Lo
     @LastModifiedDate
     private LocalDateTime updatedTime;
 
-    private Usuario(String nome, String login, String senha) {
+    private Usuario(String nome, String login, String senha, boolean ativo) {
         this.nome = nome;
         this.login = login;
         this.senha = senha;
+        this.ativo = ativo;
     }
 
     @Override
@@ -90,8 +95,8 @@ public class Usuario implements Serializable, Persistable<Long>, Identifiable<Lo
         return Objects.isNull(id);
     }
 
-    public static Usuario of(String nome, String login, String senha) {
-        return new Usuario(nome, login, senha);
+    public static Usuario of(String nome, String login, String senha, boolean ativo) {
+        return new Usuario(nome, login, senha, ativo);
     }
 
 }
