@@ -30,10 +30,15 @@ public class Phone implements Serializable, Comparable<Phone> {
     public static Phone of(String value) {
         checkNotNull(value, "Phone is required!");
         String digits = value.replaceAll("\\D", "");
-        checkArgument(digits.matches("\\d{10,11}"), "Phone is invalid!");
-        String areaCode = digits.substring(0, 2);
-        String number = digits.substring(2);
-        return new Phone(areaCode, number);
+        if(digits.matches("\\d{3}")){
+            return new Phone(null, digits);
+        }
+        else{
+            checkArgument(digits.matches("\\d{10,11}"), "Phone is invalid!");
+            String areaCode = digits.substring(0, 2);
+            String number = digits.substring(2);
+            return new Phone(areaCode, number);
+        }
     }
 
     @Override
@@ -65,16 +70,19 @@ public class Phone implements Serializable, Comparable<Phone> {
 
     @Override
     public String toString() {
-        if (number.length() == 8) {
-            return String.format("%s %s-%s",
-                    areaCode,
-                    number.substring(0, 4),
-                    number.substring(4));
-        } else {
-            return String.format("%s %s-%s",
-                    areaCode,
-                    number.substring(0, 5),
-                    number.substring(5));
+        switch (number.length()) {
+            case 3:
+                return String.format("%s", number);
+            case 8:
+                return String.format("%s %s-%s",
+                        areaCode,
+                        number.substring(0, 4),
+                        number.substring(4));
+            default:
+                return String.format("%s %s-%s",
+                        areaCode,
+                        number.substring(0, 5),
+                        number.substring(5));
         }
     }
 

@@ -24,8 +24,8 @@ public class LeituraPontoSensorService {
     @Autowired
     private LeituraSensorRepository repoLeituraSensor;
 
-    public List<LeituraPontoSensor> findAll() {
-        List<LeituraPontoSensor> sensores = repository.findAllByOrderByIdAsc();
+    public List<LeituraPontoSensor> findAll(Long id) {
+        List<LeituraPontoSensor> sensores = repository.findAllByLeituraPontoIdOrderByIdAsc(id);
         for (LeituraPontoSensor sensor : sensores) {
             encontraUltimaLeituraSensor(sensor);
         }

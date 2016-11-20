@@ -13,6 +13,8 @@ public interface LeituraPontoSensorRepository extends JpaRepository<LeituraPonto
 
     public List<LeituraPontoSensor> findAllByOrderByIdAsc();
     
+    public List<LeituraPontoSensor> findAllByLeituraPontoIdOrderByIdAsc(Long id);
+    
     public List<LeituraPontoSensor> findAllByLeituraPontoIdAndAtivoTrueOrderByIdAsc(Long id);
 
 }

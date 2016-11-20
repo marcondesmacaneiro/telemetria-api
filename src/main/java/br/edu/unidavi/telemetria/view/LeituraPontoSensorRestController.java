@@ -17,16 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Bruno Pasqualini
  */
 @RestController
-@RequestMapping("leituraponto/{id}/sensoresativos")
+@RequestMapping("leituraponto/{id}/")
 public class LeituraPontoSensorRestController {
 
     @Autowired
     private LeituraPontoSensorService service;
     
-    @RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = GET, value = "sensoresativos", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<List<LeituraPontoSensor>> findAllSensoresAtivos(@PathVariable Long id) {
         return ok(service.findAllSensoresAtivos(id));
+    }
+    
+    @RequestMapping(method = GET, value = "sensores", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<List<LeituraPontoSensor>> findAllSensores(@PathVariable Long id) {
+        return ok(service.findAll(id));
     }
 
 }
