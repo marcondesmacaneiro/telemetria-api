@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class LeituraSensorRestController {
 
     @Autowired
-    private LeituraSensorRepository service;
+    private LeituraSensorRepository repository;
     
     @RequestMapping(method = GET, value = "/filtrodata/{segundos}", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<List<LeituraSensor>> findAllSensoresAtivos(@PathVariable Long id, @PathVariable Long segundos) {
-        return ok(service.findAllBySensorAndFiltroData(id, segundos.intValue()));
+        return ok(repository.findAllBySensorAndFiltroData(id, segundos.intValue()));
     }
 
 }

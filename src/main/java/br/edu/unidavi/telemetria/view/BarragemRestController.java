@@ -2,6 +2,8 @@ package br.edu.unidavi.telemetria.view;
 
 import br.edu.unidavi.telemetria.domain.exception.EntityAreadyExistException;
 import br.edu.unidavi.telemetria.domain.model.Barragem;
+import br.edu.unidavi.telemetria.domain.model.BarragemHistorico;
+import br.edu.unidavi.telemetria.domain.repository.BarragemHistoricoRepository;
 import br.edu.unidavi.telemetria.domain.service.BarragemService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class BarragemRestController {
     @Autowired
     private BarragemService service;
     
+    @Autowired
+    private BarragemHistoricoRepository repoHistorico;
+    
     @RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<List<Barragem>> findAllBarragens() {
@@ -38,6 +43,12 @@ public class BarragemRestController {
                 .orElseThrow(EntityAreadyExistException.entityAreadyExist("Barragem não existe!"));
                 
         return ok(barragem);
+    }
+    
+    @RequestMapping(method = GET, value = "/{id}/historico/filtrodata/{segundos}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<List<BarragemHistorico>> findAllHistorico(@PathVariable Long id, @PathVariable Long segundos) {
+        return ok(repoHistorico.findAllByBarragemIdAndFiltroData(id, segundos.intValue()));
     }
 
 }
