@@ -52,6 +52,7 @@ public class BarragemService {
         if (barragem != null) {
             BarragemHistorico historico = repoHistorico.findFirstByBarragemIdOrderByIdDesc(barragem.getId());
             if (historico != null) {
+                historico.setBarragem(null);
                 barragem.setUltimoHistorico(historico);
             }
         }
