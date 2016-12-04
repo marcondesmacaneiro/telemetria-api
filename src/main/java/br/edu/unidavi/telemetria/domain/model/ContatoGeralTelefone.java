@@ -55,7 +55,7 @@ public class ContatoGeralTelefone implements Serializable, Persistable<Long>, Id
     @Column(nullable = false, unique = true, length = Phone.MAX_LENGHT)
     private Phone numero;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private ContatoGeral contatoGeral;
 
     @JsonIgnore

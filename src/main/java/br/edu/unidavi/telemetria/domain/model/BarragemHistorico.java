@@ -62,8 +62,7 @@ public class BarragemHistorico implements Serializable, Persistable<Long>, Ident
     @Column(nullable = false)
     private Integer comportasFechadas;
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(optional = false)
     private Barragem barragem;
 
     @Column(nullable = false)
